@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Cup
+{% endblock %}
+
+{% block body %}
+    <form action="/cup-creation" class="form-inline" method="post">
+        <h5>Cup Name</h5>
+        <div class="form-group mb-4" width="50px">
+            <input type="text" class="form-control w-auto mx-auto" name="cup_name" placeholder="Name" required autofocus>
+        </div>
+        <button type="submit" class="btn btn-dark">Create</button>
+    </form>
+    {% if error %}
+        <p class="error">Error: {{ error }}</p>
+    {% endif %}
+{% endblock %}

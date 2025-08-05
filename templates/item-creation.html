@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Item
+{% endblock %}
+
+{% block body %}
+    <form action="/item-creation" class="form-inline" method="post" enctype="multipart/form-data">
+        <h5>Item Name</h5>
+        <div class="form-group mb-4" width="50px">
+            <input type="text" class="form-control w-auto mx-auto" name="item_name" placeholder="Name" required autofocus>
+        </div>
+        <h5>Image</h5>
+        <div class="form-group mb-4 align-items-center">
+            <label for="imageInput" class="btn btn-dark">Choose Image</label>
+            <input type="file" class="form-control" name="file" id="imageInput" style="display:none" accept="image/*" required>
+            <span id="fileName">No file selected</span>
+        </div>
+        <button type="submit" class="btn btn-dark">Create</button>
+    </form>
+    <script>
+        document.getElementById("imageInput").addEventListener("change", function() {
+            var fileName = this.files[0].name;
+            if (!fileName)
+            {
+                fileName = "No file selected"
+            }
+            document.getElementById("fileName").innerHTML = fileName;
+        });
+    </script>
+{% endblock %}

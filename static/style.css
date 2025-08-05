@@ -1,0 +1,17 @@
+body
+{
+    background-image: url("background.png");
+    color: #bfbfbf;
+}
+
+.alert-darkred
+{
+    color: #F8D7DA;
+    background-color: #63262b;
+}
+
+.error
+{
+    color: red;
+    font-weight: bold;
+}

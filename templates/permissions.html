@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Promote/Demote User
+{% endblock %}
+
+{% block body %}
+    <form action="/permissions" method="post">
+        <div class="mb-3">
+            <h3>Adjust User Permissions</h3>
+        </div>
+        <div class="mb-4">
+            <select class="form-control w-auto mx-auto" name="prode" id="prode" required onchange="prodeUpdated()">
+                <option selected disabled>Promote/Demote</option>
+                <option value="Promote">Promote</option>
+                <option value="Demote">Demote</option>
+            </select>
+        </div>
+        <div class="mb-4" style="display:none;" id="promote-div">
+            <select class="form-control w-auto mx-auto" name="user_pro">
+                <option selected disabled>User</option>
+                {% for user in regulars %}
+                    <option value="{{ user.username }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4" style="display:none;" id="demote-div">
+            <select class="form-control w-auto mx-auto" name="user_de">
+                <option selected disabled>User</option>
+                {% for user in moderators %}
+                    <option value="{{ user.username }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" id="submit" class="btn btn-dark">Adjust</button>
+        <script>
+            function prodeUpdated()
+            {
+                prode = document.getElementById("prode").value;
+                document.getElementById("submit").innerHTML = prode;
+                if (prode == "Promote")
+                {
+                    document.getElementById("promote-div").style = "display:flex";
+                    document.getElementById("demote-div").style = "display:none";
+                }
+                else
+                {
+                    document.getElementById("promote-div").style = "display:none";
+                    document.getElementById("demote-div").style = "display:flex";
+                }
+            }
+        </script>
+    </form>
+{% endblock %}

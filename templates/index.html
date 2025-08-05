@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Shortcuts
+{% endblock %}
+
+{% block body %}
+    <div class="container d-flex flex-wrap mx-auto" style="width:85%">
+        {% for shortcut in shortcuts %}
+            <div class="card m-4 d-block align-top" style="width: 18rem;">
+                <img src="{{ shortcut.image_path }}" class="card-img-top" alt="Shortcut image" style="object-fit:cover" height="175px">
+                <div class="card-body" style="min-height:17vw">
+                    <h5 class="card-title">{{ shortcut.course_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ shortcut.username }}</h6>
+                    <div class="d-flex flex-nowrap justify-content-center my-2 mx-auto" style="width:80%">
+                        {% for pair in shortcut_items %}
+                            {% if pair.shortcut_id == shortcut.id %}
+                                <img class="img-fluid m-1" width="10%" style="flex: 1 1 10%; max-width: 40%;" src="{{ pair.item_image_path }}" alt="{{ pair.item_name }}">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <p class="card-text my-2">{{ shortcut.description }}</p>
+                    <a href="/view_shortcut?id={{ shortcut.id }}" class="btn btn-primary my-auto mt-3">View Info</a>
+                </div>
+                <div class="card-footer text-body-secondary">
+                    {{ shortcut.difference }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block alert %}
+    {% if get_flashed_messages() %}
+        <header>
+            <div class="alert alert-primary mb-0 text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+        </header>
+    {% endif %}
+{% endblock %}

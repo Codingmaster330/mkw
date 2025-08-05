@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Shortcut
+{% endblock %}
+
+{% block body %}
+    <form action="/shortcut-creation" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <h1>Create Shortcut</h1>
+        </div>
+        <div class="form-group mb-5">
+            <h3>Select Course</h3>
+            {% for cup in cups %}
+                <div class="d-inline-block px-3">
+                    <h5>{{ cup.name }} Cup</h5>
+                    {% for course in courses %}
+                        {% if course.cup_id == cup.id %}
+                            <input type="radio" class="btn-check" name="course" id="{{ course.name }}" value="{{ course.id }}" autocomplete="off" required>
+                            <label class="btn btn-outline-dark" for="{{ course.name }}"><span style="color:lightgray">{{ course.name }}</span></label><br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="form-group mb-5" width="50px">
+            <h3>Percentage Through the Lap/Segment</h3>
+            <input type="number" class="form-control w-auto mx-auto" name="percentage" placeholder="Percentage" min="1" max="100" required autocomplete="off">
+        </div>
+        <div class="form-group mb-5 w-75 mx-auto">
+            <h3>Possible Items Needed for Shortcut</h3>
+            {% for item in items %}
+                <div class="form-check form-check-inline">
+                    <div class="d-inline-block">
+                        <img src="{{ item.image_path }}" width="100"><br>
+                        <input class="form-check-input btn-check" type="checkbox" name="item" id="{{ item.name }}Checkbox" value="{{ item.id }}">
+                        <label class="btn btn-outline-dark" for="{{ item.name }}Checkbox"><span style="color:lightgray">{{ item.name }}</span></label>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="form-group mb-5">
+            <h3 class="mb-3">Shortcut Description</h3>
+            <textarea name="description" class="form-control w-50 mx-auto" style="height:200px" placeholder="Description..." maxlength="500" required></textarea>
+        </div>
+        <div class="form-group mb-5">
+            <h3 class="mb-3">Video Url (optional)</h3>
+            <input type="text" class="form-control mx-auto" name="video_url" placeholder="Url">
+        </div>
+        <div class="form-group mb-3">
+            <h3 class="mb-3">Image Upload (optional)</h3>
+            <label for="imageInput" class="btn btn-dark">Choose Image</label>
+            <input type="file" class="form-control" name="image" id="imageInput" style="display:none" accept="image/*">
+            <span id="fileName">No file selected</span>
+        </div>
+        <button type="submit" class="btn btn-dark">Create</button>
+    </form>
+    <script>
+        document.getElementById("imageInput").addEventListener("change", function() {
+            var fileName = this.files[0].name;
+            if (!fileName)
+            {
+                fileName = "No file selected"
+            }
+            document.getElementById("fileName").innerHTML = fileName;
+        });
+    </script>
+{% endblock %}

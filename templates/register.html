@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block body %}
+    <form action="/register" method="post">
+        <div class="mb-3">
+            <h3>Create Account</h3>
+        </div>
+        <div class="form-group mb-4" width="50px">
+            <input type="text" class="form-control w-auto mx-auto" name="username" placeholder="Username" maxlength="16" title="Character limit 18. No special characters except - and _." required autofocus autocomplete="new-username">
+        </div>
+        <div class="form-group mb-4" width="50px">
+            <input type="password" class="form-control w-auto mx-auto" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[A-Z]).{8,}" title="Must be at least 8 characters, include a capital letter and a number" required autofocus autocomplete="new-password">
+        </div>
+        <div class="form-group mb-4" width="50px">
+            <input type="password" class="form-control w-auto mx-auto" name="confirmation" placeholder="Confirm Password" required autofocus autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-dark">Register</button>
+    </form>
+{% endblock %}

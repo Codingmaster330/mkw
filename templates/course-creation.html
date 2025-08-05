@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create Course
+{% endblock %}
+
+{% block body %}
+    <form action="/course-creation" method="post">
+        <h5>Cup Selection</h5>
+        <div class="form-group mb-4" width="50px">
+            <select name="cup" id="cup" class="form-select w-auto mx-auto" onchange="checkForNewCup()" required autofocus>
+                <option disabled selected>Cup</option>
+                {% for cup in cups %}
+                    <option value="{{ cup.name }}">{{ cup.name }}</option>
+                {% endfor %}
+                <option value="new">New Cup...</option>
+            </select>
+        </div>
+        <div class="form-group mb-4" width="50px">
+            <h5>Course Name</h5>
+            <input type="text" class="form-control w-auto mx-auto" name="course_name" placeholder="Name" id="course-name" required>
+        </div>
+        <div class="form-group mb-4">
+            <h5>Course Length (seconds)</h5>
+            <input type="number" class="form-control w-auto mx-auto" name="course_length" placeholder="Length" required>
+        </div>
+        <div class="form-group mb-4">
+            <h5>Image Url</h5>
+            <input type="text" class="form-control mx-auto" name="image_url" placeholder="Url">
+        </div>
+        <div class="d-flex justify-content-center mb-4">
+            <div class="form-check form-group">
+                <input type="checkbox" class="form-check-input" name="intermission" id="intermission" onchange="checkIntermissionValue()">
+                <label for="intermission" class="form-check-label">Is Intermission?</label>
+            </div>
+        </div>
+        <div id="intermission-display" style="display: none" class="align-items-center justify-content-center mb-4 gap-2">
+            <label for="ending-track" id="starting-track">None >> </label>
+            <select name="ending_track" id="ending-track" class="form-select w-auto">
+                <option value="" disabled selected>Ending Track</option>
+                {% for course in courses %}
+                    <option value="{{ course.name }}">{{ course.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-dark">Create</button>
+    </form>
+
+    <script>
+        document.getElementById("course-name").addEventListener("input", updateIntermissionDisplay);
+
+        function checkForNewCup() {
+            var choice = document.getElementById("cup").value;
+            if (choice == "new") {
+                window.location.href = "/cup-creation";
+            }
+        }
+        function checkIntermissionValue() {
+            var intermissionCheckbox = document.getElementById("intermission");
+            if (intermissionCheckbox.checked) {
+                document.getElementById("intermission-display").style.display = "flex";
+            } else {
+                document.getElementById("intermission-display").style.display = "none";
+                document.getElementById("ending-track").value = "";
+            }
+        }
+        function updateIntermissionDisplay() {
+            var courseName = document.getElementById("course-name").value;
+            if (!courseName) {
+                courseName = "None";
+            }
+            document.getElementById("starting-track").innerHTML = courseName + " >> ";
+        }
+    </script>
+{% endblock %}
