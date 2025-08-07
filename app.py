@@ -5,7 +5,7 @@ import requests
 import humanize
 
 from flask import Flask, flash, redirect, render_template, request, session, url_for
-from flask_session import Session
+# from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 from datetime import datetime
@@ -18,12 +18,13 @@ SHORTCUTS_FOLDER = "shortcuts"
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
+app.secret_key = "zFO3TG|`+!seJvvGky>2d)/pA'6HC;i@"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-app.config["SESSION_FILE_DIR"] = "/tmp/flask_session"
-Session(app)
+# app.config["SESSION_PERMANENT"] = False
+# app.config["SESSION_TYPE"] = "filesystem"
+# app.config["SESSION_FILE_DIR"] = "/tmp/flask_session"
+# Session(app)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -463,4 +464,5 @@ def check_video_url(video_url):
     return request.status_code == 200
 
 if __name__ == "__main__":
+
     app.run(debug=True)
